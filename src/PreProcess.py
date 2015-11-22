@@ -1,4 +1,22 @@
 import numpy
+import math
+
+from math import radians, cos, sin, asin, sqrt
+
+def distance(loc1, loc2):
+    """
+    Calculate the great circle distance between two points
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians
+    lon1, lat1, lon2, lat2 = map(radians, [loc1[0], loc1[1], loc2[0], loc2[1]])
+    # haversine formula
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    meters = 1000 * 6367 * c
+    return meters
 
 Range=10 #distance in meter
 
@@ -22,3 +40,4 @@ for row in Data:
 
 print (Data[0])
 numpy.savetxt("updatedData.csv",Data,fmt='%0.8f,%0.8f,%4d,%s,%s')
+
